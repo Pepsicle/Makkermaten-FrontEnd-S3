@@ -15,7 +15,6 @@
             backgroundColor: '#dddddd',
             hoverBackgroundColor: '#dddddd'
           }] ">Save</button>
-          <button v-on:click="this.renderChart()">refresh</button>
 </template>
 
 <script>

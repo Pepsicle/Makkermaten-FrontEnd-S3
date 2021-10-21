@@ -1,6 +1,7 @@
 <template>
 	<div :class="chartType">
 		<canvas></canvas>
+			<button v-on:click="chart.update()">Refresh</button>
 	</div>
 </template>
 

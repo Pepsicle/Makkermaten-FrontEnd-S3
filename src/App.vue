@@ -2,8 +2,8 @@
   <div id="app">
 		<h2>Vue Charts with Chart.js</h2>
 		<div class="d-flex">
-				<line-chart/>
-				<bar-chart/>
+			<line-chart/>
+			<bar-chart/>
 		</div>
 	</div>
 </template>

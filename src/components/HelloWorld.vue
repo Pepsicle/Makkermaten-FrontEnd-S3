@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    {{ Graph.renderChart() }}
+    <!-- {{ Graph.renderChart() }} -->
   </div>
 </template>
 
