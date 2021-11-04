@@ -7,6 +7,10 @@ class ComponentDataServis {
     GetAllComponents(){
         return axios.get(`${Component_API_URL}`)
     }
+
+    GetComponenntById(id){
+        return axios.get(`${Component_API_URL}/${id}`)
+    }
 }
 
 export default new ComponentDataServis()
