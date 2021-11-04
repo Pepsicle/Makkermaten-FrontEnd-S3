@@ -27,13 +27,9 @@
       </nav>
 
       <div class="col-md-9 col-lg-10 pt-3">
-        <LineChart :chartName="'chart1'" :chartdata="this.chartdata"/>
-        <LineChart :chartName="'chart2'" :chartdata="this.chartdata2"/>
-        <LineChart :chartName="'chart3'" :chartdata="this.chartdata"/>
-        <LineChart :chartName="'chart4'" :chartdata="this.chartdata"/>
-        <LineChart :chartName="'chart5'" :chartdata="this.chartdata2"/>
-        <LineChart :chartName="'chart6'" :chartdata="this.chartdata"/>
-        <LineChart :chartName="'chart7'" :chartdata="this.chartdata"/>
+        <a v-for="(machine, index) in machines.data" :key="machine.treeviewid">
+          <LineChart :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/>
+        </a>
       </div>
     </div>
 	</div>
@@ -41,13 +37,32 @@
 
 <script>
 import LineChart from './components/charts/LineChart.vue'
+import MachineData from './Service/MachineDataService'
 
 export default {
 	name: "App",
 	components: {
     LineChart
 	},
+  async mounted() {
+    this.machines = await MachineData.GetAllMachines();
+  },
+  methods: {
+    getRandomIntInclusive(min, max, randomnumber) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    randomnumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (randomnumber == 1)
+    {
+      return this.chartdata;
+    } else if (randomnumber == 2)
+    {
+      return this.chartdata2;
+    }
+    }
+  },
   data: () => ({
+    machines: [],
     chartdata: {
       labels: ["Jan1", "Jan2", "Jan3", "Jan4", "Jan5", "Jan6", "Jan7", "Jan8", "Jan9", "Jan10", "Jan11", "Jan12", "Jan13", "Jan14", "Jan15", "Jan16", "Jan17", "Jan18", "Jan19", "Jan20", "Jan21", "Jan22", "Jan23", "Jan24", "Jan25", "Jan26", "Jan27", "Jan28", "Jan29", "Jan30", "Jan31"],
       datasets: [

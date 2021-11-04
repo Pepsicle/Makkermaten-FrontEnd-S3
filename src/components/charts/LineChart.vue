@@ -2,7 +2,7 @@
   <div :class="chartName" class="pb-5">
     <div class="row">
       <div class="col-8" id="name">
-        <p>Machinenaam</p>
+        <p>{{ this.chartName }}</p>
       </div>
       <div class="col-4" id="status">
         <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">AAN</p>
@@ -42,7 +42,10 @@ export default {
       type: Object,
       default: null
     },
-    chartName:String
+    chartName: {
+      type: String,
+      default: "null"
+    }
   },
   data: () => ({
     chartType: "line"
