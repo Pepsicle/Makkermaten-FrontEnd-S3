@@ -1,87 +1,62 @@
 <template>
-	<div class="chart">
-        <a>LINECHART TEST</a>
-		<Chart :chartData="chartData" :chartOptions="chartOptions" :chartType="chartType" />
-	</div>
+  <div :class="chartName" class="pb-5">
+    <div class="row">
+      <div class="col-8" id="name">
+        <p>Machinenaam</p>
+      </div>
+      <div class="col-4" id="status">
+        <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">AAN</p>
+        <p v-else style="color: red; font-weight: bolder">UIT</p>
+      </div>
+    </div>
+    <canvas></canvas>
+  </div>
 </template>
 
 <script>
-import Chart from "../Chart";
+import Chart from 'chart.js'
+
 export default {
-	components: {
-		Chart,
-	},
-	data() {
-		return {
-			chartType: "line",
-			chartData: {
-				labels: ["Jan1", "Jan2", "Jan3", "Jan4", "Jan5", "Jan6", "Jan7"],
-				datasets: [
-					{
-						label: "This week",
-						data: [12, 19, 10, 17, 6, 3, 7],
-						backgroundColor: "rgba(224, 248, 255, 0.4)",
-						borderColor: "#5cddff",
-						lineTension: 0,
-						pointBackgroundColor: "#5cddff",
-					},
-					{
-						label: "Last week",
-						data: [10, 25, 3, 25, 17, 4, 9],
-						backgroundColor: "rgba(241, 225, 197, 0.4)",
-						borderColor: "#ffc764",
-						lineTension: 0,
-						pointBackgroundColor: "#ffc764",
-					},
-				],
-			},
-			chartOptions: {
-				scales: {
-					xAxes: [
-						{
-							stacked: true,
-							gridLines: { 
-								display: false,
-							},
-						},
-					],
-					yAxes: [
-						{
-							gridLines:{
-								color:"#ffffff"
-							},
-							ticks: {
-								stepSize: 1,
-								callback: function(value, index, values) {
-									if (value % Math.round(values[0] / 6) == 0) {
-										return value;
-									} else if (value === 0) {
-										return value;
-									}
-								},
-							},
-							
-							// stacked: true
-						},
-					],
-				},
-				maintainAspectRatio: false,
-				legend: {
-					labels: {
-						boxWidth: 10,
-					},
-					position: "top",
-				},
-				animation: {
-					duration: 2000,
-					easing: "easeInOutQuart",
-				},
-			
-			},
-			
-		};
-	},
-};
+  name: 'LineChartContainer',
+  methods: {
+    initiateChart(chartType, chartData, chartOptions, chartName) {
+      const chartElement = document.querySelector(`.${chartName} canvas`);
+      const chart = new Chart(chartElement, {
+        name: chartName,
+        type: chartType,
+        data: chartData,
+        options: chartOptions,
+      });
+      return chart;
+    },
+
+    statusCheck(data){
+      return data.datasets[0].data.at(-1) > 0;
+    }
+  },
+  props: {
+    chartdata: {
+      default: null
+    },
+    options: {
+      type: Object,
+      default: null
+    },
+    chartName:String
+  },
+  data: () => ({
+    chartType: "line"
+  }),
+  mounted() {
+    this.loaded = false
+    try {
+      this.loaded = true
+      this.initiateChart(this.chartType, this.chartdata, this.options, this.chartName)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
 </script>
 
 <style></style>
