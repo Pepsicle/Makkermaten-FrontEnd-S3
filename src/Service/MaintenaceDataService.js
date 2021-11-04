@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Maintenance_API_URL = 'http://localhost:8080/user/api/maintenace'
+const Maintenance_API_URL = 'http://localhost:8080/api/maintenace'
 
 class MaintenaceDataService{
 

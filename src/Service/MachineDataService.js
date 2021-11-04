@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Machine_API_URL = 'http://localhost:8080/user/api/machines'
+const Machine_API_URL = 'http://localhost:8080/api/machines'
 
 class MachineDataServices
 {

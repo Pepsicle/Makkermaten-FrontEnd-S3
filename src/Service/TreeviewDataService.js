@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const TREEVIEW_API_URL = 'http://localhost:8080/user/api'
+const TREEVIEW_API_URL = 'http://localhost:8080/api/treeview'
 
 class TreeviewDataService {
 
     GetAllComponents(){
-        return axios.get(`${TREEVIEW_API_URL}/treeview`)
+        return axios.get(`${TREEVIEW_API_URL}`)
     }
 }
 
