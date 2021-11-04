@@ -29,14 +29,11 @@ export default {
         default: null
 	}
   },
-  data: () => ({
-	chartType: "line"
-  }),
   mounted () {
     this.loaded = false
     try {
 		this.loaded = true
-		this.chartConstructor(this.chartType, this.chartdata, this.options)
+		this.chartConstructor("line", this.chartdata, this.options)
     } catch (e) {
       console.error(e)
     }
