@@ -1,13 +1,11 @@
 <template>
-
+    <a>{{ this.msg }}</a>
 </template>
 
 <script>
 export default{
-    data() {
-        return {
-            
-        }
-    }
+    props:{
+		msg:String,
+	}
 }
 </script>
