@@ -1,7 +1,7 @@
 <template>
 	<div :class="chartType">
 		<canvas></canvas>
-			<button v-on:click="chart.update()">Refresh</button>
+		<button @click="renderGraph()">Render Graph</button>
 	</div>
 </template>
 
@@ -14,7 +14,9 @@ export default {
 		chartOptions:Object
 	},
 	methods: {
-		
+		// updateChart(){
+		// 	this.update();
+		// },
 		chartConstructor(chartType, chartData, chartOptions) {
 			const chartElement = document.querySelector(`.${this.chartType} canvas`);
 			console.log(chartElement)
@@ -28,13 +30,16 @@ export default {
 			});
 			return chart;
 		},
+		renderGraph(){
+			let {chartType,chartData,chartOptions} = this;
+			this.chartConstructor(chartType, chartData, chartOptions);
+		}
 	},
 	
 	mounted(){
 		let {chartType,chartData,chartOptions} = this;
-		console.log('test')
 		this.chartConstructor(chartType, chartData, chartOptions);
-		console.log('test2')
+
 	}
 };
 </script>

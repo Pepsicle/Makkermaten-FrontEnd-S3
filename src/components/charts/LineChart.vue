@@ -1,87 +1,81 @@
 <template>
+	<div>
+		<canvas class ="chartLocation"></canvas>
+	</div>
 	<div class="chart">
-        <a>LINECHART TEST</a>
-		<Chart :chartData="chartData" :chartOptions="chartOptions" :chartType="chartType" />
+        <!-- <a>LINECHART TEST</a> -->
+		<!-- <newLineChart v-if="loaded" :chartdata="chartdata" :options="options"/> -->
+		<LineChartData ref="childData" />
+		<!-- <Chart v-if="renderComponent" :chartData="chartData" :chartOptions="chartOptions" :chartType="chartType" /> -->
+		<!-- <button @click="logData()">Log data</button>
+		<button @click="renderGraph()">Render Graph1</button> -->
 	</div>
 </template>
 
 <script>
-import Chart from "../Chart";
+import Chart from 'chart.js'
+//import NewLineChart from './NewLineChart.vue'
+import LineChartData from './LineChartData.vue'
+
 export default {
-	components: {
-		Chart,
+  name: 'LineChartContainer',
+  components: { 
+	// NewLineChart,
+	LineChartData
 	},
-	data() {
-		return {
-			chartType: "line",
-			chartData: {
-				labels: ["Jan1", "Jan2", "Jan3", "Jan4", "Jan5", "Jan6", "Jan7"],
-				datasets: [
-					{
-						label: "This week",
-						data: [12, 19, 10, 17, 6, 3, 7],
-						backgroundColor: "rgba(224, 248, 255, 0.4)",
-						borderColor: "#5cddff",
-						lineTension: 0,
-						pointBackgroundColor: "#5cddff",
-					},
-					{
-						label: "Last week",
-						data: [10, 25, 3, 25, 17, 4, 9],
-						backgroundColor: "rgba(241, 225, 197, 0.4)",
-						borderColor: "#ffc764",
-						lineTension: 0,
-						pointBackgroundColor: "#ffc764",
-					},
-				],
-			},
-			chartOptions: {
-				scales: {
-					xAxes: [
-						{
-							stacked: true,
-							gridLines: { 
-								display: false,
-							},
-						},
-					],
-					yAxes: [
-						{
-							gridLines:{
-								color:"#ffffff"
-							},
-							ticks: {
-								stepSize: 1,
-								callback: function(value, index, values) {
-									if (value % Math.round(values[0] / 6) == 0) {
-										return value;
-									} else if (value === 0) {
-										return value;
-									}
-								},
-							},
-							
-							// stacked: true
-						},
-					],
-				},
-				maintainAspectRatio: false,
-				legend: {
-					labels: {
-						boxWidth: 10,
-					},
-					position: "top",
-				},
-				animation: {
-					duration: 2000,
-					easing: "easeInOutQuart",
-				},
-			
-			},
-			
-		};
+  methods: {
+	chartConstructor(chartType, chartData, chartOptions) {
+		const chartElement = document.getElementsByClassName("chartLocation");
+		console.log(chartElement)
+		console.log(chartType)
+		console.log(chartData)
+		console.log(chartOptions)
+		const chart = new Chart(chartElement, {
+			type: chartType,
+			data: chartData,
+			options: chartOptions,
+		});
+		return chart;
 	},
-};
+	// receiveData(data){
+	// 	if (data != null){
+	// 		this.chartData = data;
+	// 		this.loaded = true;
+	// 		this.chartConstructor(this.chartType, this.chartdata, this.chartOptions)
+	// 		console.log("Data received!");
+	// 		console.log(this.chartData);
+	// 	} else {
+	// 		console.log("Error receiving data");
+	// 	}
+	// }
+  },
+  data: () => ({
+    loaded: false,
+	chartdata: {
+        type: Object,
+        default: null
+	},
+	options: {
+        type: Object,
+        default: null
+	},
+	chartType: "line",
+  }),
+  mounted () {
+    this.loaded = false
+    try {
+		this.chartdata = this.$refs.childData.getData();
+		// console.log("THIS")
+		// console.log(this.$refs.childData.getData())
+		// console.log(datalist)
+		//console.log(this.chartdata)
+		this.loaded = true
+		this.chartConstructor(this.chartType, this.chartdata, this.options)
+    } catch (e) {
+      //console.error(e)
+    }
+  }
+}
 </script>
 
 <style></style>
