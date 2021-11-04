@@ -1,32 +1,89 @@
 <template>
   <div id="app">
-		<h2>Vue Charts with Chart.js</h2>
-		<div class="d-flex">
-				<line-chart/>
-				<bar-chart/>
-		</div>
+    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0" style="background-color: #0b293b;">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Dashboard</a>
+    </nav>
+    <div class="row mx-0">
+      <nav class="col-md-2 d-none d-md-block sidebar" style="position:static; background-color: rgb(148,165,241);">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" style="  color: #ffffff;">
+                Machine Health
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#" style="  color: #ffffff;">
+                Component Health
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#" style="  color: #ffffff;">
+                Maintenance
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="col-md-9 col-lg-10 pt-3">
+        <LineChart :chartName="'chart1'" :chartdata="this.chartdata"/>
+        <LineChart :chartName="'chart2'" :chartdata="this.chartdata2"/>
+        <LineChart :chartName="'chart3'" :chartdata="this.chartdata"/>
+        <LineChart :chartName="'chart4'" :chartdata="this.chartdata"/>
+        <LineChart :chartName="'chart5'" :chartdata="this.chartdata2"/>
+        <LineChart :chartName="'chart6'" :chartdata="this.chartdata"/>
+        <LineChart :chartName="'chart7'" :chartdata="this.chartdata"/>
+      </div>
+    </div>
 	</div>
 </template>
 
 <script>
 import LineChart from './components/charts/LineChart.vue'
-import BarChart from './components/charts/BarChart.vue'
+
 export default {
 	name: "App",
 	components: {
-		LineChart,
-		BarChart
+    LineChart
 	},
+  data: () => ({
+    chartdata: {
+      labels: ["Jan1", "Jan2", "Jan3", "Jan4", "Jan5", "Jan6", "Jan7", "Jan8", "Jan9", "Jan10", "Jan11", "Jan12", "Jan13", "Jan14", "Jan15", "Jan16", "Jan17", "Jan18", "Jan19", "Jan20", "Jan21", "Jan22", "Jan23", "Jan24", "Jan25", "Jan26", "Jan27", "Jan28", "Jan29", "Jan30", "Jan31"],
+      datasets: [
+        {
+          label: "Productiedata",
+          data: [12, 19, 10, 17, 6, 3, 7, 14, 1, 12, 8, 4, 9, 2, 16, 2, 7, 9, 15, 19, 12, 13, 4, 6, 12, 18, 4, 19, 12, 10, 7],
+          backgroundColor: "rgb(192,205,255)",
+          borderColor: "#4157a8",
+          lineTension: 0,
+          pointBackgroundColor: "#4157a8",
+        }
+      ],
+    },
+    chartdata2: {
+      labels: ["Jan1", "Jan2", "Jan3", "Jan4", "Jan5", "Jan6", "Jan7", "Jan8", "Jan9", "Jan10", "Jan11", "Jan12", "Jan13", "Jan14", "Jan15", "Jan16", "Jan17", "Jan18", "Jan19", "Jan20", "Jan21", "Jan22", "Jan23", "Jan24", "Jan25", "Jan26", "Jan27", "Jan28", "Jan29", "Jan30", "Jan31"],
+      datasets: [
+        {
+          label: "Productiedata",
+          data: [1, 6, 18, 11, 12, 6, 10, 11, 14, 13, 9, 2, 2, 6, 1, 3, 17, 14, 12, 15, 18, 12, 10, 9, 7, 2, 1, 0, 0, 0, 0],
+          backgroundColor: "rgb(192,205,255)",
+          borderColor: "#4157a8",
+          lineTension: 0,
+          pointBackgroundColor: "#4157a8",
+        }
+      ],
+    }
+  })
 };
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Century Gothic";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
