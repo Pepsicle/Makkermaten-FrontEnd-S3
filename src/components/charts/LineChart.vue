@@ -1,5 +1,5 @@
 <template>
-  <div :class="chartName" class="pb-5">
+  <div :class="chartName" class="pb-2">
     <div class="row">
       <div class="col-8" id="name">
         <p>{{ this.chartName }}</p>
@@ -40,7 +40,19 @@ export default {
     },
     options: {
       type: Object,
-      default: null
+      default(){
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+      }
     },
     chartName: {
       type: String,
@@ -62,4 +74,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+canvas{
+  height:200px !important;
+
+}
+</style>

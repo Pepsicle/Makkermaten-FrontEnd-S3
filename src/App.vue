@@ -26,10 +26,16 @@
         </div>
       </nav>
 
-      <div class="col-md-9 col-lg-10 pt-3">
+<!--     <div class="col-md-9 col-lg-10 pt-3">
         <a v-for="(machine, index) in machines.data" :key="machine.treeviewid">
           <LineChart :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/>
         </a>
+      </div>-->
+
+      <div class="col-md-9 col-lg-10 pt-3">
+        <LineChart :chartName="'chart1'" :chartdata="this.chartdata"/>
+        <LineChart :chartName="'chart2'" :chartdata="this.chartdata2"/>
+        <LineChart :chartName="'chart3'" :chartdata="this.chartdata"/>
       </div>
     </div>
 	</div>
@@ -101,4 +107,5 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 </style>
