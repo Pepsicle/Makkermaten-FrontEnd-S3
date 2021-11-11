@@ -1,37 +1,23 @@
 <template>
-  <div :class="chartName" class="pb-2">
-    <div class="row">
-      <div class="col-8" id="name">
-        <p>{{ this.chartName }}</p>
-      </div>
-      <div class="col-4" id="status">
-        <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">AAN</p>
-        <p v-else style="color: red; font-weight: bolder">UIT</p>
-      </div>
-    </div>
+  <div  :class="chartName">
     <canvas></canvas>
   </div>
 </template>
 
 <script>
 import Chart from 'chart.js'
-
 export default {
   name: 'LineChartContainer',
   methods: {
-    initiateChart(chartType, chartData, chartOptions, chartName) {
+    initiateChart(chartData, chartOptions, chartName) {
       const chartElement = document.querySelector(`.${chartName} canvas`);
       const chart = new Chart(chartElement, {
         name: chartName,
-        type: chartType,
+        type: 'line',
         data: chartData,
         options: chartOptions,
       });
       return chart;
-    },
-
-    statusCheck(data){
-      return data.datasets[0].data.at(-1) > 0;
     }
   },
   props: {
@@ -59,24 +45,15 @@ export default {
       default: "null"
     }
   },
-  data: () => ({
-    chartType: "line"
-  }),
   mounted() {
     this.loaded = false
+    // console.log(this.chartName)
     try {
       this.loaded = true
-      this.initiateChart(this.chartType, this.chartdata, this.options, this.chartName)
+      this.initiateChart(this.chartdata, this.options, this.chartName)
     } catch (e) {
       console.error(e)
     }
   }
 }
 </script>
-
-<style>
-canvas{
-  height:200px !important;
-
-}
-</style>
