@@ -24,6 +24,7 @@ export default {
     monitoringdata: {
       data: []
     },
+    tempmonitoringdata: {},
     chartdata: {
       labels: [],
       datasets: [
@@ -61,13 +62,28 @@ export default {
     }
   },
   async mounted() {
-    this.monitoringdata.data = await this.GetMonitoringData(this.chartName)
-    console.log(this.monitoringdata.data)
-    for (var i in this.monitoringdata.data){
-        console.log(this.monitoringdata.data[i].timestamp)
-        this.chartdata.labels.push(this.monitoringdata.data[i].timestamp)
-        this.chartdata.datasets[0].data.push(this.monitoringdata.data[i].shotTime)
+    this.tempmonitoringdata = await this.GetMonitoringData(this.chartName)
+    this.monitoringdata = this.tempmonitoringdata.data
+    console.log(this.monitoringdata)
+    for (var i in this.monitoringdata){
+      // console.log(this.monitoringdata[i].timestamp)
+      this.chartdata.labels.push(this.monitoringdata[i].timestamp)
+      this.chartdata.datasets[0].data.push(this.monitoringdata[i].shotTime)
     }
+    // this.monitoringdata.foreach((tick ,i) => {
+    //   this.chartdata.labels.push(tick[i].timestamp)
+    //   this.chartdata.datasets[0].data.push(tick[i].shotTime)
+    // })
+
+    // this.monitoringdata.data = await this.GetMonitoringData(this.chartName)
+    // console.log(this.monitoringdata.data)
+    // for (var i in this.monitoringdata.data){
+    //   this.tempmonitoringdata = this.monitoringdata
+    //     // console.log(this.monitoringdata.data[i].timestamp)
+    //     console.log(this.tempmonitoringdata.data.timestamp)
+    //     this.chartdata.labels.push(this.monitoringdata.data[i].timestamp)
+    //     this.chartdata.datasets[0].data.push(this.monitoringdata.data[i].shotTime)
+    // }
     this.loaded = true
   },
 }
