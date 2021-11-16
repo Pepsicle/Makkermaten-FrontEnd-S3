@@ -1,6 +1,6 @@
 <template>
   <div  :class="chartName">
-    <canvas></canvas>
+    <canvas v-if="chartdata"></canvas>
   </div>
 </template>
 
@@ -45,7 +45,7 @@ export default {
       default: "null"
     }
   },
-  mounted() {
+  async mounted() {
     this.loaded = false
     try {
       this.loaded = true

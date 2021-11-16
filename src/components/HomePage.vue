@@ -1,11 +1,13 @@
 <template>
     <a v-for="(machine, index) in machines.data" :key="machine.treeviewid">
-        <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/>
+        <!-- <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
+        <HomepageMachine :chartName="this.machines.data[index].name" :key="this.machines.data.name"/>
     </a>
 </template>
 
 <script>
 import MachineData from '../Service/MachineDataService'
+// import MonitoringData from '../Service/MonitoringDataDataServices'
 import HomepageMachine from '../components/HomepageMachine.vue'
 
 export default {
@@ -29,6 +31,9 @@ export default {
             return this.chartdata2;
             }
         },
+        // async GetMonitoringData(machineName){
+        //     return await MonitoringData.GetMonotoringDataPerDay(machineName, "2020-09-23T00:00:00")
+        // }
     },
     data: () => ({
         machines: [],

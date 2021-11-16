@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const MonitoringData_API_URL = 'http://localhost:8080/api/motitoringdata'
+const MonitoringData_API_URL = 'http://localhost:8080/api/monitoringdata'
 
 class motitoringdataDataServices{
     GetAllMonitoringData(board,port)
