@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Machine_API_URL = 'http://localhost:8080/api/machines'
+const Machine_API_URL = 'http://localhost:8080/api/machine'
 
 class MachineDataServices
 {
@@ -12,7 +12,7 @@ class MachineDataServices
 
     GetAllMachines()
     {
-        return axios.get(`${Machine_API_URL}`)
+        return axios.get(`${Machine_API_URL}s`)
     }
 }
 
