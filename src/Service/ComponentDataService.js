@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const Component_API_URL = 'http://localhost:8080/api/'
+const Component_API_URL = 'http://localhost:8080/api'
 
 class ComponentDataServis {
-    GetComponenntById(id)
+    GetComponentById(id)
     {
         return axios.get(`${Component_API_URL}/component/${id}`)
     }
@@ -12,7 +12,7 @@ class ComponentDataServis {
         return axios.get(`${Component_API_URL}/components`)
     }
 
-    GetComponenntById(id){
+    GetComponentsById(id){
         return axios.get(`${Component_API_URL}/components/${id}`)
     }
 }
