@@ -47,7 +47,6 @@ export default {
   },
   mounted() {
     this.loaded = false
-    // console.log(this.chartName)
     try {
       this.loaded = true
       this.initiateChart(this.chartdata, this.options, this.chartName)

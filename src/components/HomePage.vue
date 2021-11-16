@@ -2,23 +2,15 @@
     <a v-for="(machine, index) in machines.data" :key="machine.treeviewid">
         <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/>
     </a>
-
-    <!-- <HomepageMachine :chartName='"testname"' :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
-    
-    <!-- <LineChart :chartName='"testname"' :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
-
 </template>
 
 <script>
 import MachineData from '../Service/MachineDataService'
 import HomepageMachine from '../components/HomepageMachine.vue'
 
-// import LineChart from '../components/charts/LineChart.vue'
-
 export default {
 	name: "App",
 	components: {
-        // LineChart,
         HomepageMachine
 	},
     async mounted() {
