@@ -1,8 +1,10 @@
 <template>
-    <a v-for="(machine, index) in machines.data" :key="machine.treeviewid">
-        <!-- <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
-        <HomepageMachine :chartName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/>
-    </a>
+    <div class="topspace">
+        <a v-for="(machine, index) in machines.data" :key="machine.treeviewid">
+            <!-- <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
+            <br><HomepageMachine :chartName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/><br>
+        </a>
+    </div>
 </template>
 
 <script>
@@ -69,7 +71,7 @@ export default {
 </script>
 
 <style scoped>
-.machines {
-    margin-top: 3%;
+.topspace {
+    margin-top: 4%;
 }
 </style>

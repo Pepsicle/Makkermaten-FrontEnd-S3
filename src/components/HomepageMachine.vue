@@ -1,18 +1,31 @@
 <template>
   <div class="col-md-10 offset-1 card">
     <div class="textalign card-header">
-      <div v-if="loaded" class="col-8" id="name">
-        <p>Machine: {{ this.chartName }}</p>
-        <MachineComponents :machineName="this.chartName"/>
+      <div class="col-8 row nameandmodal" id="name">
+        <div class="col-md-2">
+          <p>Machine: {{ this.chartName }}</p>
+        </div>
+
+        <div class="col-md-10">
+          <button v-if="!componentsLoaded" type="button" class="btn btn-primary disabled">
+            Components
+            <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </button>
+          <Modal v-if="componentsLoaded" :modalTitle="this.chartName" :modalContent="this.components.data"/>
+        </div>
+        
       </div>
       <div v-if="loaded" class="col-4" id="status">
         <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">AAN</p>
         <p v-else style="color: red; font-weight: bolder">UIT</p>
       </div>
     </div>
-    <div class="loadingspinner col-md-12">
-      <div v-if="!loaded" class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
-        <span class="visually-hidden">Loading...</span>
+    <div v-if="!loaded">
+      <p class="loadingText">Loading Machinedata</p>
+      <div class="loadingspinner col-md-12">
+        <div class="spinner spinner-grow spinner-border-sm" role="status"/>
       </div>
     </div>
     <div class="linechartcontainer">
@@ -24,15 +37,18 @@
 <script>
 import LineChart from './charts/LineChart.vue'
 import MonitoringData from '../Service/MonitoringDataDataServices'
-import MachineComponents from './MachineComponents.vue'
+import MachineComponents from '../Service/ComponentDataService'
+import Modal from './Modal.vue'
 
 export default {
   components: {
       LineChart,
-      MachineComponents,
+      Modal
   },
   data: () => ({
     loaded: false,
+    componentsLoaded: false,
+    components: [],
     monitoringdata: {
       data: []
     },
@@ -53,10 +69,6 @@ export default {
   }),
 
   props: {
-    // monitoringdata: {
-    //   type: Promise,
-    //   default: null
-    // },
     chartName: {
       type: String,
       default: "null"
@@ -71,30 +83,20 @@ export default {
     },
     async GetMonitoringData(machineName){
         return await MonitoringData.GetMonotoringDataPerDay(machineName, "2020-09-23T00:00:00")
+    },
+    async loadComponents() {
+      this.components = await MachineComponents.GetComponentsById(this.chartName)
+      this.componentsLoaded = true
     }
   },
   async mounted() {
+    this.loadComponents()
     this.tempmonitoringdata = await this.GetMonitoringData(this.chartName)
     this.monitoringdata = this.tempmonitoringdata.data
     for (var i in this.monitoringdata){
-      // console.log(this.monitoringdata[i].timestamp)
       this.chartdata.labels.push(this.monitoringdata[i].timestamp)
       this.chartdata.datasets[0].data.push(this.monitoringdata[i].shotTime)
     }
-    // this.monitoringdata.foreach((tick ,i) => {
-    //   this.chartdata.labels.push(tick[i].timestamp)
-    //   this.chartdata.datasets[0].data.push(tick[i].shotTime)
-    // })
-
-    // this.monitoringdata.data = await this.GetMonitoringData(this.chartName)
-    // console.log(this.monitoringdata.data)
-    // for (var i in this.monitoringdata.data){
-    //   this.tempmonitoringdata = this.monitoringdata
-    //     // console.log(this.monitoringdata.data[i].timestamp)
-    //     console.log(this.tempmonitoringdata.data.timestamp)
-    //     this.chartdata.labels.push(this.monitoringdata.data[i].timestamp)
-    //     this.chartdata.datasets[0].data.push(this.monitoringdata.data[i].shotTime)
-    // }
     this.loaded = true
   },
 }
@@ -105,6 +107,13 @@ export default {
 .loadingspinner {
   justify-content: center;
   display: flex;
+  padding: 1%;
+  text-align: center;
+}
+
+.loadingText {
+  display: flex;
+  justify-content: center;
 }
 
 .textalign {
@@ -115,5 +124,11 @@ export default {
 
 .linechartcontainer {
   padding: 1%;
+}
+
+.nameandmodal {
+  display: flex;
+  align-items: left;
+  text-align: left;
 }
 </style>

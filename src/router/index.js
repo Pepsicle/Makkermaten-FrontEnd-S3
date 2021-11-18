@@ -1,6 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
 import HomePage from './../components/HomePage'
-import MachineComponents from './../components/MachineComponents'
 
 const routes = [
     {
@@ -8,12 +7,6 @@ const routes = [
       name: "Home",
       component: HomePage,
     },
-
-    {
-      path: "/MachineComponents",
-      name: "MachineComponents",
-      component: MachineComponents,
-    }
   ];
   
   const router = createRouter({

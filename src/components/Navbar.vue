@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="fixed-top">
       <ul class="customnavbar">
           <li><img class="q3logo" src="./imgs/Q3logo.png"></li>
           <li><a href="/">Home</a></li>
