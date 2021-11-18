@@ -13,7 +13,6 @@ export default
 {
     async mounted(){
         this.components = await MachineComponents.GetComponentsById(this.machineName)
-        console.log(this.components)
         this.loaded= true
     },
     data: () => ({
