@@ -1,14 +1,23 @@
 <template>
-    <div class="row">
-      <div class="col-8" id="name">
-        <p>{{ this.chartName }}</p>
+  <div class="col-md-10 offset-1 card">
+    <div class="textalign card-header">
+      <div v-if="loaded" class="col-8" id="name">
+        <p>Machine: {{ this.chartName }}</p>
       </div>
-      <div class="col-4" id="status">
+      <div v-if="loaded" class="col-4" id="status">
         <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">AAN</p>
         <p v-else style="color: red; font-weight: bolder">UIT</p>
       </div>
     </div>
-    <LineChart v-if="loaded" :chartName="this.chartName" :chartdata="this.returnData()" :key="this.chartName"/>
+    <div class="loadingspinner col-md-12">
+      <div v-if="!loaded" class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="linechartcontainer">
+      <LineChart v-if="loaded" :chartName="this.chartName" :chartdata="this.returnData()" :key="this.chartName"/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -89,3 +98,20 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.loadingspinner {
+  justify-content: center;
+  display: flex;
+}
+
+.textalign {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.linechartcontainer {
+  padding: 1%;
+}
+</style>

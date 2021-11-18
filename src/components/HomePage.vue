@@ -1,7 +1,7 @@
 <template>
     <a v-for="(machine, index) in machines.data" :key="machine.treeviewid">
         <!-- <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
-        <HomepageMachine :chartName="this.machines.data[index].name" :key="this.machines.data.name"/>
+        <HomepageMachine :chartName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/>
     </a>
 </template>
 
@@ -66,3 +66,9 @@ export default {
     })
 };
 </script>
+
+<style scoped>
+.machines {
+    margin-top: 3%;
+}
+</style>

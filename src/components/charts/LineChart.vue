@@ -1,5 +1,5 @@
 <template>
-  <div  :class="chartName">
+  <div :class="chartName">
     <canvas v-if="chartdata"></canvas>
   </div>
 </template>
@@ -28,6 +28,11 @@ export default {
       type: Object,
       default(){
         return {
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
           responsive: true,
           maintainAspectRatio: false,
           scales: {
