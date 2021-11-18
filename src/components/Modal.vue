@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="btn btn-primary" @click="modal.show()">Components</button>
+  <button type="button" class="btn btn-primary" @click="modal.show()">Components ({{ this.componentcount }})</button>
   <div class="modal fade" ref="Component" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -29,6 +29,7 @@ export default {
   name: "Modal",
   data: () => ({
     modal: null,
+    componentcount: '',
   }),
   props: {
     modalTitle: {
@@ -43,6 +44,7 @@ export default {
   mounted() {
     //Gets the "ref" of the modal so it knows which to activated
     this.modal = new Modal(this.$refs.Component);
+    this.componentcount = this.modalContent.length
   },
 };
 //source: https://dev.to/tefoh/use-bootstrap-5-in-vue-correctly-2k2g
