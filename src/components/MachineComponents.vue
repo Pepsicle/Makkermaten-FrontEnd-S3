@@ -10,11 +10,19 @@ import MachineComponents from '../Service/ComponentDataService'
 export default
 {
     async mounted(){
-        this.components = await MachineComponents.GetComponentsById(/*machinenaam*/)
+        this.components = await MachineComponents.GetComponentsById(this.machineName)
         console.log(this.components)
+        this.loaded= true
     },
     data: () => ({
-        components: []
-    })   
+        components: [],
+        loaded: false
+    }),
+    props: {
+        machineName: {
+            type: String,
+            default: null
+        },
+    }
 };
 </script>
