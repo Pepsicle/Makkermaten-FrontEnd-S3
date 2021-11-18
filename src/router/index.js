@@ -4,7 +4,7 @@ import MachineComponents from './../components/MachineComponents'
 
 const routes = [
     {
-      path: "/Home",
+      path: "/",
       name: "Home",
       component: HomePage,
     },

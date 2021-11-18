@@ -1,7 +1,9 @@
 <template>
-    <a v-for="(components, index) in components.data" :key="components.treeviewid">
-        <h1> {{ this.components.data[index].omschrijving }} </h1>
-    </a>
+    <div v-if="loaded">
+        <a v-for="(components, index) in components.data" :key="components.treeviewid">
+            <h1> {{ this.components.data[index].omschrijving }} </h1>
+        </a>
+    </div>
 </template>
 
 <script>

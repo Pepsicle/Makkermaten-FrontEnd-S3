@@ -3,6 +3,7 @@
     <div class="textalign card-header">
       <div v-if="loaded" class="col-8" id="name">
         <p>Machine: {{ this.chartName }}</p>
+        <MachineComponents :machineName="this.chartName"/>
       </div>
       <div v-if="loaded" class="col-4" id="status">
         <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">AAN</p>
@@ -23,10 +24,12 @@
 <script>
 import LineChart from './charts/LineChart.vue'
 import MonitoringData from '../Service/MonitoringDataDataServices'
+import MachineComponents from './MachineComponents.vue'
 
 export default {
   components: {
       LineChart,
+      MachineComponents,
   },
   data: () => ({
     loaded: false,
@@ -73,7 +76,6 @@ export default {
   async mounted() {
     this.tempmonitoringdata = await this.GetMonitoringData(this.chartName)
     this.monitoringdata = this.tempmonitoringdata.data
-    console.log(this.monitoringdata)
     for (var i in this.monitoringdata){
       // console.log(this.monitoringdata[i].timestamp)
       this.chartdata.labels.push(this.monitoringdata[i].timestamp)
