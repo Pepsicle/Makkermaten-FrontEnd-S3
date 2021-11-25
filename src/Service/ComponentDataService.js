@@ -12,8 +12,12 @@ class ComponentDataServis {
         return axios.get(`${Component_API_URL}/components`)
     }
 
-    GetComponentsById(id){
-        return axios.get(`${Component_API_URL}/components/${id}`)
+    GetComponentsById(name){
+        return axios.get(`${Component_API_URL}/components/${name}`)
+    }
+    
+    GetCurrentComponents(name, timestamp){
+        return axios.get(`${Component_API_URL}/components/${name}/${timestamp}`)
     }
 }
 

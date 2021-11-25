@@ -6,14 +6,24 @@
           <p>Machine: {{ this.chartName }}</p>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-3">
           <button v-if="!componentsLoaded" type="button" class="btn btn-primary disabled">
             Components
             <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
               <span class="visually-hidden">Loading...</span>
             </div>
           </button>
-          <Modal v-if="componentsLoaded" :modalTitle="this.chartName" :modalContent="this.components.data"/>
+          <Modal v-if="componentsLoaded" :modalTitle="this.chartName" :modalContent="this.components.data" :modalType="'Components'" />
+        </div>
+
+        <div class="col-md-4">
+          <button v-if="!componentHistoryLoaded" type="button" class="btn btn-primary disabled">
+            Component History
+            <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </button>
+          <Modal v-if="componentHistoryLoaded" :modalTitle="this.chartName" :modalContent="this.componentHistory.data" :modalType="'Component History'" />
         </div>
         
       </div>
@@ -48,7 +58,9 @@ export default {
   data: () => ({
     loaded: false,
     componentsLoaded: false,
+    componentHistoryLoaded: false,
     components: [],
+    componentHistory: [],
     monitoringdata: {
       data: []
     },
@@ -57,7 +69,7 @@ export default {
       labels: [],
       datasets: [
         {
-          label: "Productiedata",
+          label: "Shot Time",
           data: [],
           backgroundColor: "rgb(192,205,255)",
           borderColor: "#4157a8",
@@ -84,17 +96,22 @@ export default {
     async GetMonitoringData(machineName){
         return await MonitoringData.GetMonotoringDataPerDay(machineName, "2020-09-23T00:00:00")
     },
+    async loadComponentHistory() {
+      this.componentHistory = await MachineComponents.GetComponentsById(this.chartName)
+      this.componentHistoryLoaded = true
+    },
     async loadComponents() {
-      this.components = await MachineComponents.GetComponentsById(this.chartName)
+      this.components = await MachineComponents.GetCurrentComponents(this.chartName, "2020-09-23", "00:00:00")
+      console.log (this.components)
       this.componentsLoaded = true
     }
   },
   async mounted() {
-    this.loadComponents()
+    this.loadComponentHistory()
     this.tempmonitoringdata = await this.GetMonitoringData(this.chartName)
     this.monitoringdata = this.tempmonitoringdata.data
     for (var i in this.monitoringdata){
-      this.chartdata.labels.push(this.monitoringdata[i].timestamp)
+      this.chartdata.labels.push(new Date(this.monitoringdata[i].timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
       this.chartdata.datasets[0].data.push(this.monitoringdata[i].shotTime)
     }
     this.loaded = true

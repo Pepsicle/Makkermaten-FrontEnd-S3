@@ -1,10 +1,10 @@
 <template>
-  <button type="button" class="btn btn-primary" @click="modal.show()">Components ({{ this.componentcount }})</button>
+  <button type="button" class="btn btn-primary" @click="modal.show()">{{modalType}} ({{ this.componentcount }})</button>
   <div class="modal fade" ref="Component" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }} Componenents</h5>
+          <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }} {{ modalType }}</h5>
           <button
             type="button"
             class="btn-close"
@@ -39,6 +39,10 @@ export default {
     modalContent: {
       default: null,
       type: Array
+    },
+    modalType: {
+      default: null,
+      type: String
     }
   },
   mounted() {

@@ -1,44 +1,31 @@
 <template>
   <div class="components">
-      <div>
-        <h4>{{componentdata}}</h4>
+      <div class="card">
+        <h4 class="card-title">{{this.loadedComponent[0]}}</h4>
+        <div class="card-body">
+          <p>
+            Dit is een component
+          </p>
+        </div>
       </div>
-    
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  components:{
+  name: "component",
+  data: () => ({
 
-  },
-  data()
-  {
-    return {
-      componentName:[],
+  }),
+  props: {
+    loadedComponent: {
+      default: null,
+      type: Object,
     }
-  },
-  props:{
-    componentdata:[]
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #000000;
-}
+
 </style>
