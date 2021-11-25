@@ -56,6 +56,7 @@ export default {
       Modal
   },
   data: () => ({
+    timestamp: '',
     loaded: false,
     componentsLoaded: false,
     componentHistoryLoaded: false,
@@ -94,19 +95,25 @@ export default {
       return this.chartdata
     },
     async GetMonitoringData(machineName){
-        return await MonitoringData.GetMonotoringDataPerDay(machineName, "2020-09-23T00:00:00")
+        return await MonitoringData.GetMonotoringDataPerDay(machineName, this.timestamp)
     },
     async loadComponentHistory() {
       this.componentHistory = await MachineComponents.GetComponentsById(this.chartName)
       this.componentHistoryLoaded = true
     },
     async loadComponents() {
-      this.components = await MachineComponents.GetCurrentComponents(this.chartName, "2020-09-23", "00:00:00")
-      console.log (this.components)
+      this.components = await MachineComponents.GetCurrentComponents(this.chartName, this.timestamp)
       this.componentsLoaded = true
+    },
+    getTimeStamp() {
+      var date = new Date()
+      this.timestamp = "2020-09-23T" + date.toLocaleTimeString()
+      console.log(this.timestamp)
     }
   },
   async mounted() {
+    this.getTimeStamp()
+    this.loadComponents()
     this.loadComponentHistory()
     this.tempmonitoringdata = await this.GetMonitoringData(this.chartName)
     this.monitoringdata = this.tempmonitoringdata.data
