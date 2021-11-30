@@ -14,7 +14,9 @@
         </div>
         <div class="modal-body">
           <div v-for="content in modalContent" v-bind:key="content">
-            <p>{{ content.omschrijving }}</p>
+            <p>Name: {{ content.name }}</p>
+            <p>Description: {{ content.omschrijving }}</p>
+            <hr>
           </div>
         </div>
       </div>

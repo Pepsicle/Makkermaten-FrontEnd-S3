@@ -28,8 +28,8 @@
         
       </div>
       <div v-if="loaded" class="col-4" id="status">
-        <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">AAN</p>
-        <p v-else style="color: red; font-weight: bolder">UIT</p>
+        <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">On</p>
+        <p v-else style="color: red; font-weight: bolder">Off</p>
       </div>
     </div>
     <div v-if="!loaded">

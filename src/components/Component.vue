@@ -4,7 +4,7 @@
         <h4 class="card-title">{{this.loadedComponent[0]}}</h4>
         <div class="card-body">
           <p>
-            Dit is een component
+            Componentinformation placeholder
           </p>
         </div>
       </div>

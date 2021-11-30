@@ -7,8 +7,8 @@
             </form>
             <div class="scrollListContainer">
                 <select v-model="selectedComponent" class="form-select scrollList" multiple >
-                    <option v-for="component in filterByTerm" :key="component.omschrijving">
-                        <option value="component.omschrijving">{{ component.omschrijving }}</option>
+                    <option v-for="component in filterByTerm" :key="component.name">
+                        <option value="component.omschrijving">{{ component.name }} - {{ component.omschrijving }}</option>
                     </option>
                 </select>
             </div>
@@ -50,8 +50,13 @@ export default {
     computed: {
         filterByTerm() {
         return this.components.filter(component => {
-            return component.omschrijving.toLowerCase().includes(this.searchTerm.toLowerCase());
-        });
+            if(component.omschrijving.toLowerCase().includes(this.searchTerm.toLowerCase())) {
+                return component.omschrijving.toLowerCase().includes(this.searchTerm.toLowerCase())
+            }
+            else if (component.name.toLowerCase().includes(this.searchTerm.toLowerCase())){
+                return component.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+            }
+        })
     }
   }
 }
