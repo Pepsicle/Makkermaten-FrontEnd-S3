@@ -107,8 +107,11 @@ export default {
     },
     getTimeStamp() {
       var date = new Date()
-      this.timestamp = "2020-09-23T" + date.toLocaleTimeString()
-      console.log(this.timestamp)
+      date = "2020-09-30T" + date.toLocaleTimeString()
+      // console.log("current date" + date)
+      // date.setDate(date.getDate -1)
+      this.timestamp = date
+      // console.log(date)
     }
   },
   async mounted() {
