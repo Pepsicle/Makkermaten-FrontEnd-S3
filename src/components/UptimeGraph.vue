@@ -2,26 +2,17 @@
     <br /><br />
     <p>UptimeGraph</p>
 
-    <div class="progress" style="height: 100px; margin: 20px">
-        <div v-for="change in testdata" :key="change.timestamp">
-            <div v-bind:style="lossPercentageStyle" class="progress-bar bg-danger" />
-            </div>
-        </div>
+    
     <div v-if="loaded" style="width: 100%; display: flex; flex-direction: row">
         <div v-for="change in testdata" :key="change.timestamp" v-bind:style="change.percentage">
             <div v-if="change.machineOn">
-                <div class="bg-success p-3">On</div>
-                </div>
+              <div class="bg-success p-3 percentagewidth">On</div>
+              <div class="hide"> {{ this.GetTimeFromTimestamp(change.timestamp) }} </div>
+            </div>
             <div  v-if="!change.machineOn">
-                <div class="bg-danger p-3">Off</div>
-                </div>
-        </div>
-    </div>
-    <div class="bg-secondary">100%</div>
-    <div>
-        <div class="row">
-            <div class="bg-success" style="width: 60%">On</div>
-            <div class="bg-danger" style="width: 40%">Off</div>
+              <div class="bg-danger p-3 percentagewidth">Off</div>
+              <div class="hide"> {{ this.GetTimeFromTimestamp(change.timestamp) }} </div>
+            </div>
         </div>
     </div>
 </template>
@@ -96,6 +87,13 @@ export default {
         }
       }
     },
+    GetTimeFromTimestamp(timestamp) {
+      return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+
+      // var finaldate = new Date(timestamp)
+      // finaldate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      // return finaldate
+    }
   },
   mounted() {
     this.getPercentages();
@@ -106,4 +104,11 @@ export default {
 </script>
 
 <style scoped>
+.hide {
+  display: none;
+}
+
+.percentagewidth:hover + .hide {
+  display: block;
+}
 </style>
