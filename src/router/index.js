@@ -3,6 +3,7 @@ import HomePage from './../components/HomePage'
 import ComponentHealth from '../components/ComponentHealth'
 import Dashboard from '../components/Dashboard'
 import UptimeGraph from '../components/UptimeGraph'
+import Maintenance from '../components/MaintenanceTemp'
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
       path: "/uptimegraph",
       name: "UptimeGraph",
       component: UptimeGraph,
+    },
+    {
+      path: "/maintenance",
+      name: "Maintenance",
+      component: Maintenance,
     },
   ];
   
