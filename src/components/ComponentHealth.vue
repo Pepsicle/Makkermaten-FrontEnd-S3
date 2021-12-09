@@ -22,63 +22,72 @@
 </template>
 
 <script>
-import ComponentDataService from '../Service/ComponentDataService'
-import Componentcomponent from '../components/Component.vue'
+import ComponentDataService from "../Service/ComponentDataService";
+import Componentcomponent from "../components/Component.vue";
 
 export default {
-    name: "ComponentHealth",
-    components: {
-        Componentcomponent,
+  name: "ComponentHealth",
+  components: {
+    Componentcomponent,
+  },
+  data: () => ({
+    selectedComponent: [],
+    components: [],
+    loaded: false,
+    componentSelected: false,
+    searchTerm: "",
+  }),
+  methods: {
+    async GetAllComponents() {
+      var temp = await ComponentDataService.GetAllComponents();
+      this.components = temp.data;
     },
-    data: () => ({
-        selectedComponent: [],
-        components: [],
-        loaded: false,
-        componentSelected: false,
-        searchTerm: '',
-    }),
-    methods: {
-        async GetAllComponents() {
-            var temp = await ComponentDataService.GetAllComponents()
-            this.components = temp.data
-        },
+  },
+  async mounted() {
+    this.GetAllComponents();
+    this.loaded = true;
+  },
+  computed: {
+    filterByTerm() {
+      return this.components.filter((component) => {
+        if (
+          component.omschrijving
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())
+        ) {
+          return component.omschrijving
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase());
+        } else if (
+          component.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        ) {
+          return component.name
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase());
+        }
+      });
     },
-    async mounted() {
-        this.GetAllComponents()
-        this.loaded = true
-    },
-    computed: {
-        filterByTerm() {
-        return this.components.filter(component => {
-            if(component.omschrijving.toLowerCase().includes(this.searchTerm.toLowerCase())) {
-                return component.omschrijving.toLowerCase().includes(this.searchTerm.toLowerCase())
-            }
-            else if (component.name.toLowerCase().includes(this.searchTerm.toLowerCase())){
-                return component.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-            }
-        })
-    }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-.scrollList{
-    height: 80vh;
-    max-width: 100vh;
-    overflow:scroll;
-    -webkit-overflow-scrolling: touch;
-    overflow-x: hidden;
+.scrollList {
+  height: 80vh;
+  max-width: 100vh;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
 }
 
-.componenthealthcontainer{
-    height: 80vh;
-    padding-top: 5vh;
-    margin-left: 0.5%;
-    width: 95%;
+.componenthealthcontainer {
+  height: 80vh;
+  padding-top: 5vh;
+  margin-left: 0.5%;
+  width: 95%;
 }
 
-.component{
-    padding: 1%;
+.component {
+  padding: 1%;
 }
 </style>
