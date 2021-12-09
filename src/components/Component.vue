@@ -32,11 +32,11 @@ export default {
       type: Object,
     },
   },
-  watch:{
-    loadedComponent(){
+  computed:{
+      loadedComponent(){
       this.componentName = this.loadedComponent[0].split(" -")[0]
       console.log(this.componentName)
-      this.GetMachinesByComponent(this.componentName)
+      return this.GetMachinesByComponent(this.componentName)
     }
   },
 };
