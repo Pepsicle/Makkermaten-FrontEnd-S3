@@ -2,14 +2,15 @@
     <br /><br />
     <p>UptimeGraph</p>
 
+    <!-- <p>{{this.uptimeData}}</p> -->
     
     <div v-if="loaded" style="width: 100%; display: flex; flex-direction: row">
-        <div v-for="change in testdata" :key="change.timestamp" v-bind:style="change.percentage">
-            <div v-if="change.machineOn">
+        <div v-for="change in uptimeData" :key="change.timestamp" v-bind:style="widthPercentages[change]">
+            <div v-if="change.shotTime < 0">
               <div class="bg-success p-3 percentagewidth">On</div>
               <div class="hide"> {{ this.GetTimeFromTimestamp(change.timestamp) }} </div>
             </div>
-            <div  v-if="!change.machineOn">
+            <div  v-if="change.shotTime = 0">
               <div class="bg-danger p-3 percentagewidth">Off</div>
               <div class="hide"> {{ this.GetTimeFromTimestamp(change.timestamp) }} </div>
             </div>
@@ -18,10 +19,13 @@
 </template>
 
 <script>
+import UptimeDataService from '../Service/UptimeDataService'
+
 export default {
   name: "UptimeGraph",
   data: () => ({
     loaded: false,
+    widthPercentages: [],
     testdata: [
       {
         machineOn: true,
@@ -44,9 +48,10 @@ export default {
         percentage: "",
       },
     ],
+    uptimeData: '',
 
     winPercentageStyle: "",
-    lossPercentageStyle: "width: 5%",
+    // lossPercentageStyle: "width: 5%",
   }),
   methods: {
     getPercentages() {
@@ -55,19 +60,19 @@ export default {
       var percentage;
       var percentageString;
 
-      for (let index = 0; index < this.testdata.length; index++) {
+      for (let index = 0; index < this.uptimeData.length; index++) {
         var endOfDay = false;
-        var starttime = this.testdata[index].timestamp;
+        var starttime = this.uptimeData[index].timestamp;
 
-        if (index + 1 != this.testdata.length) {
-          endtime = this.testdata[index + 1].timestamp;
+        if (index + 1 != this.uptimeData.length) {
+          endtime = this.uptimeData[index + 1].timestamp;
           endOfDay = false;
         } else {
-          endtime = this.testdata[0].timestamp;
+          endtime = this.uptimeData[0].timestamp;
           endOfDay = true;
         }
 
-        console.log(index + 1 + " " + this.testdata.length);
+        console.log(index + 1 + " " + this.uptimeData.length);
         console.log(starttime + "  " + endtime + " " + endOfDay);
 
         var diff_in_millis = Math.abs(new Date(starttime) - new Date(endtime));
@@ -77,28 +82,32 @@ export default {
           percentage = 100 - (diff_in_minutes / minutesInDay) * 100;
 
           percentageString = "width: " + percentage.toString() + "%;";
-          this.testdata[index].percentage = percentageString;
-          console.log(percentageString);
+          this.widthPercentages.push(percentageString)
+          // this.testdata[index].percentage = percentageString;
+          // console.log(percentageString);
         } else {
           percentage = (diff_in_minutes / minutesInDay) * 100;
           percentageString = "width: " + percentage.toString() + "%;";
-          this.testdata[index].percentage = percentageString;
-          console.log(percentageString);
+          this.widthPercentages.push(percentageString)
+          // this.testdata[index].percentage = percentageString;
+          // console.log(percentageString);
         }
       }
     },
     GetTimeFromTimestamp(timestamp) {
       return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-
-      // var finaldate = new Date(timestamp)
-      // finaldate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      // return finaldate
+    },
+    async GetUptimeMachine(name, startTime) {
+      var apiResponse = await UptimeDataService.GetUptimeMachine(name, startTime)
+      console.log(apiResponse)
+      this.uptimeData = apiResponse.data
     }
   },
   mounted() {
+    this.GetUptimeMachine("A3", "2020-09-01T00:00:00")
     this.getPercentages();
     this.loaded = true;
-    console.log(this.testdata);
+    // console.log(this.testdata);
   },
 };
 </script>
@@ -106,9 +115,16 @@ export default {
 <style scoped>
 .hide {
   display: none;
+  min-width: 1px;
 }
 
 .percentagewidth:hover + .hide {
   display: block;
+  min-width: 1px;
+}
+
+.percentagewidth {
+  padding: 0%;
+  min-width: 1px;
 }
 </style>
