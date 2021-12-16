@@ -1,21 +1,20 @@
 <template>
-    <br /><br />
-    <p>UptimeGraph</p>
-
-    <!-- <p>{{this.uptimeData}}</p> -->
-    
-    <div v-if="loaded" style="width: 100%; display: flex; flex-direction: row">
-        <div v-for="change in uptimeData" :key="change.timestamp" v-bind:style="widthPercentages[change]">
-            <div v-if="change.shotTime < 0">
-              <div class="bg-success p-3 percentagewidth">On</div>
-              <div class="hide"> {{ this.GetTimeFromTimestamp(change.timestamp) }} </div>
-            </div>
-            <div  v-if="change.shotTime = 0">
-              <div class="bg-danger p-3 percentagewidth">Off</div>
-              <div class="hide"> {{ this.GetTimeFromTimestamp(change.timestamp) }} </div>
-            </div>
-        </div>
+  <br /><br />
+  <p>UptimeGraph</p>
+  
+  <div v-if="loaded" style="width: 100%; display: flex; flex-direction: row">
+    <p>loaded</p>
+    <div v-for="(change, index) in uptimeData" :key="change.timestamp" v-bind:style="this.widthPercentages[index]">
+      <div v-if="change.shotTime >= 0.1">
+        <div class="bg-success percentagewidth">&#10240;</div>
+        <div class="hide"> {{ this.GetTimeFromTimestamp(change.timestamp) }} </div>
+      </div>
+      <div v-if="change.shotTime == 0">
+        <div class="bg-danger percentagewidth">&#10240;</div>
+        <div class="hide"> {{ this.GetTimeFromTimestamp(change.timestamp) }} </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -24,6 +23,7 @@ import UptimeDataService from '../Service/UptimeDataService'
 export default {
   name: "UptimeGraph",
   data: () => ({
+    currentInt: '0',
     loaded: false,
     widthPercentages: [],
     testdata: [
@@ -53,7 +53,15 @@ export default {
     winPercentageStyle: "",
     // lossPercentageStyle: "width: 5%",
   }),
+  computed: {
+    styles: function() {
+      return this.widthPercentages[this.currentInt]
+    }
+  },
   methods: {
+    logwidth(change) {
+      console.log("test" + this.widthPercentages[change])
+    },
     getPercentages() {
       var minutesInDay = 1440;
       var endtime;
@@ -84,29 +92,45 @@ export default {
           percentageString = "width: " + percentage.toString() + "%;";
           this.widthPercentages.push(percentageString)
           // this.testdata[index].percentage = percentageString;
-          // console.log(percentageString);
+          console.log(percentageString);
         } else {
           percentage = (diff_in_minutes / minutesInDay) * 100;
           percentageString = "width: " + percentage.toString() + "%;";
           this.widthPercentages.push(percentageString)
           // this.testdata[index].percentage = percentageString;
-          // console.log(percentageString);
+          console.log(percentageString);
         }
       }
+    },
+    getCurrentWidth(currentI) {
+      console.log("sending width")
+      this.currentInt = currentI
+      console.log(this.currentInt)
+      return this.widthPercentages[currentI]
     },
     GetTimeFromTimestamp(timestamp) {
       return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     },
     async GetUptimeMachine(name, startTime) {
-      var apiResponse = await UptimeDataService.GetUptimeMachine(name, startTime)
-      console.log(apiResponse)
-      this.uptimeData = apiResponse.data
+      await UptimeDataService.GetUptimeMachine(name, startTime).then(res => {this.testmethod(res)})
+      // console.log(apiResponse)
+      
+      // this.uptimeData = apiResponse
+      // console.log(this.uptimeData)
+      this.getPercentages();
+      this.loaded = true;
+    },
+    testmethod(res) {
+      this.uptimeData = res
+      // this.uptimeData.forEach(shot => {
+      //   console.log(shot.shotTime)
+      // });
     }
   },
   mounted() {
     this.GetUptimeMachine("A3", "2020-09-01T00:00:00")
-    this.getPercentages();
-    this.loaded = true;
+    // console.log("logging data in mounted" + this.uptimeData)
+    // this.loaded = true;
     // console.log(this.testdata);
   },
 };
@@ -115,16 +139,10 @@ export default {
 <style scoped>
 .hide {
   display: none;
-  min-width: 1px;
 }
 
 .percentagewidth:hover + .hide {
   display: block;
-  min-width: 1px;
 }
 
-.percentagewidth {
-  padding: 0%;
-  min-width: 1px;
-}
 </style>
