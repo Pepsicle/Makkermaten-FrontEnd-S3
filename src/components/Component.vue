@@ -1,9 +1,10 @@
 <template>
   <div class="components">
     <div class="card">
-      <h4 class="card-title">{{ this.loadedComponent[0] }}</h4>
+      <h3 class="card-title componentTitle">{{ this.loadedComponent[0] }}</h3>
       <div class="card-body">
-        <p v-for="machine in machines" :key="machine.omschrijving">Machinenaam : {{machine.omschrijving}}</p>
+        <h4>Machine history:</h4>
+        <h5 v-for="machine in machines" :key="machine.omschrijving">Machine: {{machine.omschrijving}}</h5>
       </div>
     </div>
   </div>
@@ -44,4 +45,7 @@ export default {
 </script>
 
 <style scoped>
+.componentTitle {
+  padding-left: 1.5%;
+}
 </style>
