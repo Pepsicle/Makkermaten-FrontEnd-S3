@@ -19,6 +19,11 @@ class ComponentDataServis {
     GetCurrentComponents(name, timestamp){
         return axios.get(`${Component_API_URL}/components/${name}/${timestamp}`)
     }
+
+    GetTotalshotCountFromComponent(name)
+    {
+        return axios.get(`${Component_API_URL}/componentshots/${name}`)
+    }
 }
 
 export default new ComponentDataServis()
