@@ -1,9 +1,12 @@
 <template>
   <div class="components">
-    <div class="card">
+    <div v-if="componentName != ''" class="card">
       <h3 class="card-title componentTitle">{{ this.loadedComponent[0] }}</h3>
       <div class="card-body">
-        <p>Total shot count: {{this.totalShotcountcomponent}}</p>
+        <div v-if="!shotcountloaded">Total shot count:
+          <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false"/>
+        </div>
+        <p v-if="shotcountloaded">Total shot count: {{this.totalShotcountcomponent}}</p>
         <h4>Machine history:</h4>
         <h5 v-for="machine in machines" :key="machine.omschrijving">Machine: {{machine.omschrijving}}</h5>
       </div>
@@ -18,6 +21,7 @@ import ComponentDataService from "../Service/ComponentDataService"
 export default {
   name: "component",
   data: () => ({
+    shotcountloaded: false,
     machines: [],
     componentName: "",
     totalShotcountcomponent: "",
@@ -31,9 +35,11 @@ export default {
       this.machines = temp.data;
     },
     async GetTotalShotcount() {
+      this.shotcountloaded = false
       var temp = await ComponentDataService.GetTotalshotCountFromComponent(this.componentName)
       console.log(temp.data)
       this.totalShotcountcomponent = temp.data
+      this.shotcountloaded = true
     },
   },
   props: {
