@@ -14,6 +14,11 @@ class MachineDataServices
     {
         return axios.get(`${Machine_API_URL}s`)
     }
+
+    GetMachineHistoryFromComponent(name)
+    {
+        return axios.get(`${Machine_API_URL}s/${name}`)
+    }
 }
 
 export default new MachineDataServices()
