@@ -25,6 +25,7 @@
           </button>
           <Modal v-if="componentHistoryLoaded" :modalTitle="this.chartName" :modalContent="this.componentHistory.data" :modalType="'Component History'" />
         </div>
+
         
       </div>
       <div v-if="loaded" class="col-4" id="status">
@@ -32,15 +33,24 @@
         <p v-else style="color: red; font-weight: bolder">Off</p>
       </div>
     </div>
-    <div v-if="!loaded">
-      <p class="loadingText">Loading Machinedata</p>
-      <div class="loadingspinner col-md-12">
-        <div class="spinner spinner-grow spinner-border-sm" role="status"/>
-      </div>
-    </div>
-    <div class="linechartcontainer">
-      <LineChart v-if="loaded" :chartName="this.chartName" :chartdata="this.returnData()" :key="this.chartName"/>
-    </div>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <UptimeGraph :machineName="this.chartName" :givenTimeStamp="this.timestamp" />
+      </li>
+      <li class="list-group-item">
+        <div v-if="!loaded">
+          <p class="loadingText">Loading Shottime Data</p>
+          <div class="loadingspinner col-md-12">
+            <div class="spinner spinner-grow spinner-border-sm" role="status"/>
+          </div>
+        </div>
+        <div class="linechartcontainer">
+          <LineChart v-if="startload" :chartName="this.chartName" :chartdata="this.returnData()" :key="this.chartName"/>
+        </div>
+      </li>
+    </ul>
+
   </div>
 </template>
 
@@ -49,13 +59,16 @@ import LineChart from './charts/LineChart.vue'
 import MonitoringData from '../Service/MonitoringDataDataServices'
 import MachineComponents from '../Service/ComponentDataService'
 import Modal from './Modal.vue'
+import UptimeGraph from './UptimeGraph.vue'
 
 export default {
   components: {
       LineChart,
-      Modal
+      Modal,
+      UptimeGraph
   },
   data: () => ({
+    startload: false,
     timestamp: '',
     loaded: false,
     componentsLoaded: false,
@@ -116,6 +129,7 @@ export default {
   },
   async mounted() {
     this.getTimeStamp()
+    this.startload = true
     this.loadComponents()
     this.loadComponentHistory()
     this.tempmonitoringdata = await this.GetMonitoringData(this.chartName)
