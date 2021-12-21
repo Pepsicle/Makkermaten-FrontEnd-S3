@@ -3,7 +3,7 @@
   <p>UptimeGraph</p>
   
   <div v-if="loaded" style="width: 100%; display: flex; flex-direction: row">
-    <p>loaded</p>
+    <!-- <p>loaded</p> -->
     <div v-for="(change, index) in uptimeData" :key="change.timestamp" v-bind:style="this.widthPercentages[index]">
       <div v-if="change.shotTime >= 0.1">
         <div class="bg-success percentagewidth">&#10240;</div>
@@ -143,6 +143,10 @@ export default {
 
 .percentagewidth:hover + .hide {
   display: block;
+}
+
+.percentagewidth {
+  height: 75px;
 }
 
 </style>
