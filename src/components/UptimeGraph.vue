@@ -28,26 +28,21 @@ export default {
     widthPercentages: [],
     testdata: [
       {
-
-        //Test timestamp 1
         machineOn: true,
         timestamp: "2020-09-30T00:00:00",
         percentage: "",
       },
       {
-        //Test timestamp 2
         machineOn: false,
         timestamp: "2020-09-30T13:00:00",
         percentage: "",
       },
       {
-        //Test timestamp 3
         machineOn: true,
         timestamp: "2020-09-30T16:00:00",
         percentage: "",
       },
       {
-        //Test timestamp 4
         machineOn: false,
         timestamp: "2020-09-30T17:00:00",
         percentage: "",
