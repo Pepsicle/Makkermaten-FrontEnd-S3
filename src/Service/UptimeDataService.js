@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const UptimeData_API_URL = 'http://localhost:8080/api/machinestate'
+const UptimeData_API_URL = 'http://localhost:8080/api/machinestatebar'
 
 class uptimeDataServices{
     GetUptimeMachine(name,starttime)
