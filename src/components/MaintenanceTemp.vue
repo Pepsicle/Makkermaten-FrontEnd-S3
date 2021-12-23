@@ -11,12 +11,14 @@
             <option value="Predictive Maintenance" >Predictive Maintenance</option>
             <option value="Corrective Maintenance">Corrective Maintenance</option>
             <option value="Predetermined Maintenance">Predetermined Maintenance</option>
-          </select>
+        </select>
+        <br>
+    <button type="button" class="btn btn-primary">Submit Maintenance</button>
     </div>
     <div class="card" style="width: 50%; margin: 1%;">
         <p>Maintenance Entered:</p>
         <p>Start Date: {{this.selectedDateTime}}</p>
-        <p>Maintenance Type: {{this.maintenanceDescription}}</p>
+        <p>Maintenance Type: {{this.maintenanceType}}</p>
     </div>
 </template>
 
