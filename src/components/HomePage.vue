@@ -2,7 +2,7 @@
     <div class="topspace">
         <a v-for="(machine, index) in machines.data" :key="index.treeviewid">
             <!-- <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
-            <br><HomepageMachine :chartName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/><br>
+            <br><HomepageMachine :machineName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/><br>
         </a>
     </div>
 </template>
