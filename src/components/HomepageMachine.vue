@@ -1,8 +1,8 @@
 <template>
   <div class="col-md-10 offset-1 card">
     <div class="textalign card-header row">
-      <p>{{ this.machineName }}</p>
-      <div v-if="loaded" class="col-4" id="status">
+      <p class="col-md-2">{{ this.machineName }}</p>
+      <div v-if="loaded" class="col-md-3 offset-7" id="status">
         <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">On</p>
         <p v-else style="color: red; font-weight: bolder">Off</p>
       </div>

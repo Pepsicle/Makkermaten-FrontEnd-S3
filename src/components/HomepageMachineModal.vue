@@ -1,54 +1,80 @@
 <template>
-  <div class="col-md-10 offset-1 card">
-    <div class="textalign card-header">
-      <div class="col-8 row nameandmodal" id="name">
-        <div class="col-md-2">
-          <p>Machine: {{ this.chartName }}</p>
+<button type="button" class="btn btn-primary" @click="modal.show()">BOOP</button>
+<div class="modal fade" ref="Component" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }} {{ modalType }}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            @click="modal.hide()"
+            aria-label="Close"
+          ></button>
         </div>
+        <div class="modal-body">
+          <div v-for="content in modalContent" v-bind:key="content">
+            
+            <div class="col-md-10 offset-1 card">
+              <div class="textalign card-header">
+                <div class="col-8 row nameandmodal" id="name">
+                  <div class="col-md-2">
+                    <p>Machine: {{ this.chartName }}</p>
+                  </div>
 
-        <div class="col-md-3">
-          <button v-if="!componentsLoaded" type="button" class="btn btn-primary disabled">
-            Components
-            <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </button>
-          <Modal v-if="componentsLoaded" :modalTitle="this.chartName" :modalContent="this.components.data" :modalType="'Components'" />
-        </div>
+                  <div class="col-md-3">
+                    <button v-if="!componentsLoaded" type="button" class="btn btn-primary disabled">
+                      Components
+                      <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </button>
+                    <ComponentModal v-if="componentsLoaded" :modalTitle="this.chartName" :modalContent="this.components.data" :modalType="'Components'" />
+                  </div>
 
-        <div class="col-md-4">
-          <button v-if="!componentHistoryLoaded" type="button" class="btn btn-primary disabled">
-            Component History
-            <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </button>
-          <Modal v-if="componentHistoryLoaded" :modalTitle="this.chartName" :modalContent="this.componentHistory.data" :modalType="'Component History'" />
-        </div>
-        
-      </div>
-      <div v-if="loaded" class="col-4" id="status">
-        <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">On</p>
-        <p v-else style="color: red; font-weight: bolder">Off</p>
-      </div>
-    </div>
-    
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <UptimeGraph :machineName="this.chartName" :givenTimeStamp="this.timestamp" />
-      </li>
-      <li class="list-group-item">
-        <div v-if="!loaded">
-          <p class="loadingText">Loading Shottime Data</p>
-          <div class="loadingspinner col-md-12">
-            <div class="spinner spinner-grow spinner-border-sm" role="status"/>
+                  <div class="col-md-4">
+                    <button v-if="!componentHistoryLoaded" type="button" class="btn btn-primary disabled">
+                      Component History
+                      <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </button>
+                    <ComponentModal v-if="componentHistoryLoaded" :modalTitle="this.chartName" :modalContent="this.componentHistory.data" :modalType="'Component History'" />
+                  </div>
+                  
+                </div>
+                <div v-if="loaded" class="col-4" id="status">
+                  <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">On</p>
+                  <p v-else style="color: red; font-weight: bolder">Off</p>
+                </div>
+              </div>
+              
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <UptimeGraph :machineName="this.chartName" :givenTimeStamp="this.timestamp" />
+                </li>
+                <li class="list-group-item">
+                  <div v-if="!loaded">
+                    <p class="loadingText">Loading Shottime Data</p>
+                    <div class="loadingspinner col-md-12">
+                      <div class="spinner spinner-grow spinner-border-sm" role="status"/>
+                    </div>
+                  </div>
+                  <div class="linechartcontainer">
+                    <LineChart v-if="loaded" :chartName="this.chartName" :chartdata="this.returnData()" :key="this.chartName"/>
+                  </div>
+                </li>
+              </ul>
+
+            <hr>
           </div>
         </div>
-        <div class="linechartcontainer">
-          <LineChart v-if="loaded" :chartName="this.chartName" :chartdata="this.returnData()" :key="this.chartName"/>
-        </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+  </div>
+
+
+  
 
   </div>
 </template>
@@ -57,16 +83,18 @@
 import LineChart from './charts/LineChart.vue'
 import MonitoringData from '../Service/MonitoringDataDataServices'
 import MachineComponents from '../Service/ComponentDataService'
-import Modal from './Modal.vue'
+import ComponentModal from './Modal.vue'
 import UptimeGraph from './UptimeGraph.vue'
+import { Modal } from "bootstrap";
 
 export default {
   components: {
       LineChart,
-      Modal,
+      ComponentModal,
       UptimeGraph
   },
   data: () => ({
+    modal: null,
     timestamp: '',
     loaded: false,
     componentsLoaded: false,
@@ -126,6 +154,9 @@ export default {
     }
   },
   async mounted() {
+    this.modal = new Modal(this.$refs.Component);
+
+
     this.getTimeStamp()
     this.loadComponents()
     this.loadComponentHistory()
