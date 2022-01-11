@@ -22,10 +22,8 @@
           Plan Maintenance
         </button>
         <MaintenanceModal v-show="isModalVisible" @close="closeModal">
-          <template v-slot:header> New maintenance. </template>
-
-          <template v-slot:body><MaintenanceTemp></MaintenanceTemp></template>
-
+          <template v-slot:header>{{ this.loadedComponent[0].split(" -")[1] }}</template>
+          <template v-slot:body><MaintenanceTemp :loadedComponent="this.loadedComponent"></MaintenanceTemp></template>
         </MaintenanceModal>
       </div>
     </div>
@@ -56,7 +54,6 @@ export default {
       var temp = await MachineDataService.GetMachineHistoryFromComponent(
         this.componentName
       );
-      console.log(temp);
       this.machines = temp.data;
     },
     async GetTotalShotcount() {
@@ -84,7 +81,6 @@ export default {
   watch: {
     loadedComponent: function () {
       this.componentName = this.loadedComponent[0].split(" -")[0];
-      console.log(this.componentName);
       this.GetTotalShotcount();
       return this.GetMachinesByComponent(this.componentName);
     },
