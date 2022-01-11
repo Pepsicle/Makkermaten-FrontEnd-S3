@@ -1,8 +1,9 @@
 <template>
     <div class="topspace">
-        <a v-for="(machine, index) in machines.data" :key="index.treeviewid">
+        <br>
+        <a v-for="(machine, index) in machines.data" :key="index.treeviewid" class="cardflex card-deck">
             <!-- <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
-            <br><HomepageMachine :machineName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/><br>
+            <HomepageMachine :machineName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/><br>
         </a>
     </div>
 </template>
@@ -46,5 +47,15 @@ export default {
 <style scoped>
 .topspace {
     margin-top: 4%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardflex {
+  padding: 0.5%;
+  text-align: center;
 }
 </style>

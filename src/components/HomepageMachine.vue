@@ -1,16 +1,15 @@
 <template>
-  <div class="col-md-10 offset-1 card">
+  <div v-if="loaded" class="col-md-12 card">
     <div class="textalign card-header row">
-      <p class="col-md-2">{{ this.machineName }}</p>
-      <div v-if="loaded" class="col-md-3 offset-7" id="status">
-        <p v-if="statusCheck(chartdata)" style="color:green; font-weight: bold">On</p>
+      <p class="col-md-6">{{ this.machineName }}</p>
+      <div class="col-md-6" id="status">
+        <p v-if="this.currentStatus" style="color:green; font-weight: bold">On</p>
         <p v-else style="color: red; font-weight: bolder">Off</p>
       </div>
+      <div class="card-body list-group list-group-flush">
+        <HomepageMachineModal v-if="loaded" :chartName="this.machineName" :key="this.machineName"/>
+      </div>
     </div>
-    
-    <ul class="list-group list-group-flush">
-      <HomepageMachineModal :chartName="this.machineName" :key="this.machineName"/>
-    </ul>
 
   </div>
 </template>
@@ -18,6 +17,7 @@
 <script>
 // import MachineComponents from '../Service/ComponentDataService'
 import HomepageMachineModal from './HomepageMachineModal.vue'
+import UptimeData from '../Service/UptimeDataService'
 
 export default {
   components: {
@@ -35,8 +35,10 @@ export default {
     },
   },
   methods: {
-    statusCheck(){ //moet nog async worden
-      this.currentStatus = true;
+    async statusCheck(){ //moet nog async worden
+      this.getTimeStamp()
+      this.currentStatus = await UptimeData.GetUptimeMachine(this.machineName, this.timestamp);
+      this.loaded = true
     },
     getTimeStamp() {
       var date = new Date()
@@ -46,7 +48,7 @@ export default {
   },
   async mounted() {
     this.statusCheck()
-    this.loaded = true
+    // this.loaded = true
   },
 }
 
@@ -75,9 +77,4 @@ export default {
   padding: 1%;
 }
 
-.nameandmodal {
-  display: flex;
-  align-items: left;
-  text-align: left;
-}
 </style>
