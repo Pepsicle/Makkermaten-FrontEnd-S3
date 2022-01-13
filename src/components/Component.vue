@@ -27,7 +27,7 @@
         </MaintenanceModal>
       </div>
     </div>
-    <Maintenance></Maintenance>
+    <Maintenance @update-maintenance="GetMaintenances"></Maintenance>
   </div>
 </template>
 

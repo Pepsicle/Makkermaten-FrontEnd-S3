@@ -34,13 +34,6 @@ export default {
   mounted() {
     this.GetMaintenances();
   },
-  watch:
-  {
-    res: function()
-    {
-      this.GetMaintenances();
-    }
-  },
   methods: {
     async GetMaintenances() {
       this.res = await MaintenanceDataService.GetAllMaintenance();

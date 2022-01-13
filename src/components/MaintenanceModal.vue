@@ -25,14 +25,7 @@
 
         <footer class="modal-footer">
           <slot name="footer"> </slot>
-          <button
-            type="button"
-            class="btn-blue"
-            @click="close"
-            aria-label="Close modal"
-          >
-            Close
-          </button>
+          <a href="/componenthealth">Close</a>
         </footer>
       </div>
     </div>

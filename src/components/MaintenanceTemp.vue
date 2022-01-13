@@ -52,11 +52,8 @@ export default {
       this.maintenance.selectedDateTime = this.selectedDateTime;
       this.maintenance.description = this.description;
       await MaintenanceDataService.CreateNewMaintenance(this.maintenance);
+      this.$root.$emit('update-maintenance')
     },
-    async testMethod()
-    {
-      console.log("click");
-    }
   },
   props: {
     loadedComponent: {
