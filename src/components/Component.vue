@@ -27,7 +27,7 @@
         </MaintenanceModal>
       </div>
     </div>
-    <Maintenance @update-maintenance="GetMaintenances"></Maintenance>
+    <!-- <Maintenance @update-maintenance="GetMaintenances"></Maintenance> -->
   </div>
 </template>
 
@@ -36,14 +36,14 @@ import MachineDataService from "../Service/MachineDataService";
 import ComponentDataService from "../Service/ComponentDataService";
 import MaintenanceTemp from "../components/MaintenanceTemp.vue"
 import MaintenanceModal from "../components/MaintenanceModal.vue";
-import Maintenance from "../components/Maintenance.vue"
+// import Maintenance from "../components/Maintenance.vue"
 
 export default {
   name: "component",
   components: {
     MaintenanceTemp,
     MaintenanceModal,
-    Maintenance
+    // Maintenance
   },
   data: () => ({
     shotcountloaded: false,

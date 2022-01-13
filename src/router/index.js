@@ -3,7 +3,7 @@ import HomePage from './../components/HomePage'
 import ComponentHealth from '../components/ComponentHealth'
 import Dashboard from '../components/Dashboard'
 import UptimeGraph from '../components/UptimeGraph'
-import Maintenance from '../components/Maintenance'
+import MaintenancePage from '../components/MaintenancePage'
 
 const routes = [
     {
@@ -29,7 +29,7 @@ const routes = [
     {
       path: "/maintenance",
       name: "Maintenance",
-      component: Maintenance,
+      component: MaintenancePage,
     },
   ];
   

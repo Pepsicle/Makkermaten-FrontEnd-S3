@@ -5,6 +5,7 @@
           <li><a href="/">Home</a></li>
           <!-- <li><a href="/dashboard">Dashboard</a></li> -->
           <li><a href="/componenthealth">Component Health</a></li>
+          <li><a href="/maintenance">Maintenance</a></li>
       </ul>
   </nav>
 </template>
