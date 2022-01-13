@@ -27,6 +27,7 @@
         </MaintenanceModal>
       </div>
     </div>
+    <Maintenance></Maintenance>
   </div>
 </template>
 
@@ -35,12 +36,14 @@ import MachineDataService from "../Service/MachineDataService";
 import ComponentDataService from "../Service/ComponentDataService";
 import MaintenanceTemp from "../components/MaintenanceTemp.vue"
 import MaintenanceModal from "../components/MaintenanceModal.vue";
+import Maintenance from "../components/Maintenance.vue"
 
 export default {
   name: "component",
   components: {
     MaintenanceTemp,
     MaintenanceModal,
+    Maintenance
   },
   data: () => ({
     shotcountloaded: false,

@@ -53,6 +53,10 @@ export default {
       this.maintenance.description = this.description;
       await MaintenanceDataService.CreateNewMaintenance(this.maintenance);
     },
+    async testMethod()
+    {
+      console.log("click");
+    }
   },
   props: {
     loadedComponent: {
@@ -60,7 +64,6 @@ export default {
       type: Object,
     },
   },
-  async mounted() {},
 };
 </script>
 

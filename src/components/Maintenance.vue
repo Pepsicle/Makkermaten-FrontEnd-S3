@@ -1,6 +1,7 @@
 <template>
+<br><br>
   <div class="infotable">
-  <table border=10 class="datatable">
+  <table class="datatable">
     <thead>
       <tr>
         <th>Name</th>
@@ -33,6 +34,13 @@ export default {
   mounted() {
     this.GetMaintenances();
   },
+  watch:
+  {
+    res: function()
+    {
+      this.GetMaintenances();
+    }
+  },
   methods: {
     async GetMaintenances() {
       this.res = await MaintenanceDataService.GetAllMaintenance();
@@ -42,4 +50,9 @@ export default {
 </script>
 
 <style scoped>
+.dataTable, th , td {
+  border-block: solid grey;
+  width: 33%;
+  column-width: 25%;
+}
 </style>
