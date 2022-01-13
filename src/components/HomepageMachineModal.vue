@@ -1,7 +1,7 @@
 <template>
 <button type="button" class="btn btn-primary" @click="openModal()">Show Details</button>
-<div class="modal fade" ref="Component" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade modal-xl" ref="Component" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h5 v-if="loaded" class="modal-title" id="exampleModalLabel">{{ modalTitle }} {{ modalType }}</h5>
@@ -17,12 +17,12 @@
           
           <div class="col-md-10 offset-1 card">
             <div class="textalign card-header">
-              <div class="col-8 row nameandmodal" id="name">
+              <div class="col-12 row nameandmodal" id="name">
                 <div class="col-md-2">
                   <p>Machine: {{ this.chartName }}</p>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <button v-if="!componentsLoaded" type="button" class="btn btn-primary disabled">
                     Components
                     <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
@@ -32,7 +32,7 @@
                   <ComponentModal v-if="componentsLoaded" :modalTitle="this.chartName" :modalContent="this.components.data" :modalType="'Components'" />
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <button v-if="!componentHistoryLoaded" type="button" class="btn btn-primary disabled">
                     Component History
                     <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="false">
@@ -50,9 +50,9 @@
             </div>
             
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">
+              <!-- <li class="list-group-item">
                 <UptimeGraph :machineName="this.chartName" :givenTimeStamp="this.timestamp" />
-              </li>
+              </li> -->
               <li class="list-group-item">
                 <div v-if="!loaded">
                   <p class="loadingText">Loading Shottime Data</p>
@@ -78,14 +78,14 @@ import LineChart from './charts/LineChart.vue'
 import MonitoringData from '../Service/MonitoringDataDataServices'
 import MachineComponents from '../Service/ComponentDataService'
 import ComponentModal from './Modal.vue'
-import UptimeGraph from './UptimeGraph.vue'
+// import UptimeGraph from './UptimeGraph.vue'
 import { Modal } from "bootstrap";
 
 export default {
   components: {
       LineChart,
       ComponentModal,
-      UptimeGraph
+      // UptimeGraph
   },
   data: () => ({
     modal: null,
@@ -197,6 +197,14 @@ export default {
 .nameandmodal {
   display: flex;
   align-items: left;
-  text-align: left;
+  text-align: center;
+}
+
+.modal {
+  left: 19%;
+}
+
+.p {
+  color: black;
 }
 </style>
