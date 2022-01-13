@@ -2,7 +2,7 @@
     <br><br>
     <div class="row componenthealthcontainer">
         <div class="col-md-3">
-            <form v-if="loaded">
+            <form v-if="loaded" class="searchbar">
                 <input type="text" v-model="searchTerm" @change="filterByTerm()" placeholder="Search Component"/>
             </form>
             <div class="scrollListContainer">
@@ -89,5 +89,9 @@ export default {
 
 .component {
   padding: 1%;
+}
+
+.searchbar {
+  max-width: 100vh;
 }
 </style>
