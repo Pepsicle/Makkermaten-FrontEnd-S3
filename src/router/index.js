@@ -3,7 +3,7 @@ import HomePage from './../components/HomePage'
 import ComponentHealth from '../components/ComponentHealth'
 import Dashboard from '../components/Dashboard'
 import UptimeGraph from '../components/UptimeGraph'
-import Maintenance from '../components/MaintenanceTemp'
+import Maintenance from '../components/Maintenance'
 
 const routes = [
     {
