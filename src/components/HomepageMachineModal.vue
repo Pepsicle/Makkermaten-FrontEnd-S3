@@ -12,13 +12,16 @@
           aria-label="Close"
         ></button>
       </div>
-      <div v-if="loaded" class="modal-body">
+      <div class="modal-body">
         <!-- <div v-for="content in modalContent" v-bind:key="content"> -->
           
           <div class="col-md-10 offset-1 card">
             <div class="textalign card-header">
               <div class="col-12 row nameandmodal" id="name">
-                <div class="col-md-2">
+                <div v-if="!componentsLoaded" class="col-md-2">
+                  <p>Machine: Loading...</p>
+                </div>
+                <div v-if="componentsLoaded" class="col-md-2">
                   <p>Machine: {{ this.chartName }}</p>
                 </div>
 

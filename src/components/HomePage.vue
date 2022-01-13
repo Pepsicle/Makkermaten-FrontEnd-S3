@@ -1,10 +1,11 @@
 <template>
     <div class="topspace">
         <br>
-        <a v-for="(machine, index) in machines.data" :key="index.treeviewid" class="cardflex card-deck">
+        <div v-for="(machine, index) in machines.data" :key="index.treeviewid" class="cardflex card-deck">
             <!-- <HomepageMachine :chartName="this.machines.data[index].name" :chartdata="this.getRandomIntInclusive(1, 2, 0)"/> -->
-            <HomepageMachine :machineName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/><br>
-        </a>
+            <HomepageMachine :machineName="this.machines.data[index].name" :key="this.machines.data.name" class="machines"/>
+            <br>
+        </div>
     </div>
 </template>
 

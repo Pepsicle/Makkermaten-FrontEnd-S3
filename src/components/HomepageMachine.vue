@@ -1,16 +1,13 @@
 <template>
-  <div v-if="loaded" class="col-md-12 card">
+  <div v-if="loaded" class="col-md-12 card bg-light">
     <div class="textalign card-header row">
       <p class="col-md-6">{{ this.machineName }}</p>
       <div class="col-md-6" id="status">
         <p v-if="this.currentStatus" style="color:green; font-weight: bold">On</p>
         <p v-else style="color: red; font-weight: bolder">Off</p>
       </div>
-      <div class="card-body list-group list-group-flush">
-        <HomepageMachineModal v-if="loaded" :chartName="this.machineName" :key="this.machineName"/>
-      </div>
+      <HomepageMachineModal v-if="loaded" :chartName="this.machineName" :key="this.machineName"/>
     </div>
-
   </div>
 </template>
 
@@ -71,10 +68,20 @@ export default {
   display: flex;
   align-items: center;
   text-align: center;
+  border: 0;
+  padding: 0;
 }
 
 .linechartcontainer {
   padding: 1%;
+}
+
+.list-group {
+  padding-left: 1rem;
+}
+
+.row {
+    --bs-gutter-x: 0;
 }
 
 </style>
